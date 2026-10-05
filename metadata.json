@@ -1,0 +1,6 @@
+{
+  "name": "Barbearia Imperial - Agendamento & Serviços",
+  "description": "Site oficial e agendamento online para barbearia moderna com serviços de corte, barba na toalha quente e estética masculina.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
