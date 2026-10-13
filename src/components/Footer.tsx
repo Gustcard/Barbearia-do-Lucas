@@ -1,6 +1,6 @@
-import React from 'react';
 import { BarbershopInfo } from '../types';
 import { MapPin, Phone, MessageCircle, Sparkles } from 'lucide-react';
+import { OfficialLogo } from './OfficialLogo';
 
 interface FooterProps {
   info: BarbershopInfo;
@@ -9,60 +9,48 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ info, onOpenBooking }) => {
   return (
-    <footer className="bg-[#06080a] border-t border-[#162023] py-14 text-[#9ca3af]">
+    <footer className="bg-[#06080a] border-t border-[#162023] py-8 sm:py-12 text-[#9ca3af]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 text-left">
           
-          {/* Brand block */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00c9b7] to-[#008f8c] flex items-center justify-center text-black font-black text-xl font-serif">
-                L
-              </div>
-              <span className="text-xl font-black tracking-tight text-white uppercase font-heading block">
-                {info.name}
-              </span>
-            </div>
+          {/* Official Brand block */}
+          <div className="space-y-2">
+            <OfficialLogo height={34} />
             
-            <p className="text-xs text-[#00c9b7] font-bold uppercase tracking-wider">
+            <p className="text-[11px] text-[#00c9b7] font-bold uppercase tracking-wider">
               {info.tagline}
             </p>
 
             <p className="text-xs leading-relaxed text-[#9ca3af]">
-              Cortes masculinos modernos, barboterapia tradicional, estética facial e o Clube do Lucas, nosso clube exclusivo de assinatura mensal.
+              Cortes masculinos modernos, barboterapia tradicional, estética e o Clube do Lucas.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-3">
-              Serviços & Assinatura
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
+              Navegação Rápida
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-1.5 text-xs">
               <li>
-                <a href="#servicos" className="hover:text-[#00c9b7] transition-colors">
-                  Cortes & Visagismo
+                <a href="#clube" className="text-[#00c9b7] font-bold hover:underline">
+                  Clube do Lucas (Assinatura)
                 </a>
               </li>
               <li>
-                <a href="#servicos" className="hover:text-[#00c9b7] transition-colors">
-                  Limpeza de Pele Profunda
+                <a href="#servicos" className="hover:text-white transition-colors">
+                  Tabela de Serviços & Valores
                 </a>
               </li>
               <li>
-                <a href="#servicos" className="hover:text-[#00c9b7] transition-colors">
-                  Hidratação & Desondulação
+                <a href="#barbaterapia" className="hover:text-white transition-colors">
+                  Barbaterapia Tradicional
                 </a>
               </li>
               <li>
-                <a href="#clube" className="text-[#00c9b7] font-bold hover:underline transition-colors flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" /> Clube do Lucas (Assinatura)
-                </a>
-              </li>
-              <li>
-                <a href="#kids" className="hover:text-[#00c9b7] transition-colors">
-                  Barbearia do Lucas Kids
+                <a href="#kids" className="hover:text-white transition-colors">
+                  Espaço Kids
                 </a>
               </li>
             </ul>
@@ -70,70 +58,39 @@ export const Footer: React.FC<FooterProps> = ({ info, onOpenBooking }) => {
 
           {/* Opening Hours */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
               Horários de Atendimento
             </h4>
-            <div className="space-y-1.5 text-xs">
+            <div className="space-y-1 text-xs">
               <div>{info.openingHours.weekdays}</div>
               <div>{info.openingHours.saturday}</div>
-              <div className="text-amber-500/80">{info.openingHours.sunday}</div>
+              <div className="text-[#00c9b7] font-semibold">{info.openingHours.sunday}</div>
             </div>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-2">
               Espaço & Contato
             </h4>
-            <div className="space-y-2.5 text-xs">
+            <div className="space-y-2 text-xs">
               <div className="flex items-start gap-2">
                 <MapPin className="w-3.5 h-3.5 text-[#00c9b7] shrink-0 mt-0.5" />
-                <span>{info.address} - {info.neighborhood} · {info.city}</span>
+                <span>{info.address}, {info.streetNumber || '508'} · Vila Prudente, SP</span>
               </div>
               <div className="flex items-center gap-2">
                 <MessageCircle className="w-3.5 h-3.5 text-[#00c9b7] shrink-0" />
-                <a
-                  href={`https://wa.me/${info.whatsapp.replace(/\D/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white"
-                >
-                  WhatsApp: {info.phone}
-                </a>
-              </div>
-              <div>
-                <a
-                  href={info.instagramUrl || `https://instagram.com/${info.instagram.replace('@', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#00c9b7] hover:underline"
-                >
-                  Instagram: {info.instagram}
-                </a>
-              </div>
-              <div className="pt-2">
-                <a
-                  href={info.appBarberUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-2.5 px-3 text-xs font-bold text-black bg-[#00c9b7] hover:bg-[#1fe2cf] rounded-lg transition-colors inline-flex items-center justify-center gap-2"
-                >
-                  Agende agora
-                </a>
+                <span>WhatsApp: {info.phone}</span>
               </div>
             </div>
           </div>
 
         </div>
 
-        {/* Sub-footer */}
-        <div className="pt-8 border-t border-[#131b1e] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-          <div>
-            © {new Date().getFullYear()} {info.name}. Todos os direitos reservados.
-          </div>
-          <div className="text-[#64748b]">
-            Mais que corte, é identidade · Barbearia do Lucas
-          </div>
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-[#141c1f] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#64748b] text-center sm:text-left">
+          <p>© {new Date().getFullYear()} {info.name}. Todos os direitos reservados.</p>
+          <p>Rua Orfanato, 508 · Vila Prudente · São Paulo - SP</p>
         </div>
 
       </div>

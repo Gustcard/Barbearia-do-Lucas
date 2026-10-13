@@ -10,7 +10,6 @@ import { ClubSection } from './components/ClubSection';
 import { BarbaTerapiaSection } from './components/BarbaTerapiaSection';
 import { ServicesSection } from './components/ServicesSection';
 import { KidsSection } from './components/KidsSection';
-import { GallerySection } from './components/GallerySection';
 import { ReviewsSection } from './components/ReviewsSection';
 import { LocationAndHours } from './components/LocationAndHours';
 import { Footer } from './components/Footer';
@@ -33,7 +32,14 @@ export default function App() {
   const [shopInfo, setShopInfo] = useState<BarbershopInfo>(() => {
     try {
       const saved = localStorage.getItem('barbearia_lucas_info_v4');
-      return saved ? JSON.parse(saved) : initialBarbershopInfo;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.openingHours?.sunday?.includes('Fechado')) {
+          parsed.openingHours.sunday = initialBarbershopInfo.openingHours.sunday;
+        }
+        return parsed;
+      }
+      return initialBarbershopInfo;
     } catch {
       return initialBarbershopInfo;
     }
@@ -133,7 +139,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080b0e] text-[#e5e7eb] font-sans antialiased selection:bg-[#00c9b7] selection:text-black">
+    <div className="min-h-screen bg-[#080b0e] text-[#e5e7eb] font-sans antialiased selection:bg-[#00c9b7] selection:text-black overflow-x-hidden w-full max-w-full">
       {/* Header */}
       <Header
         info={shopInfo}
@@ -156,17 +162,6 @@ export default function App() {
           plans={clubPlans}
           info={shopInfo}
           onOpenBooking={() => handleOpenBooking()}
-        />
-
-        {/* Galeria do Espaço & Ambiente Real da Barbearia */}
-        <GallerySection
-          photos={photos}
-          onOpenBooking={() => handleOpenBooking()}
-          onUpdatePhoto={handleUpdatePhoto}
-          onUpdateAllPhotos={handleUpdateAllPhotos}
-          onRemovePhoto={handleRemovePhoto}
-          enhancedQuality={enhancedQuality}
-          onToggleEnhancedQuality={() => setEnhancedQuality(!enhancedQuality)}
         />
 
         {/* Barbaterapia Dedicada (Toalha Quente, Hidratação e Cuidados) */}

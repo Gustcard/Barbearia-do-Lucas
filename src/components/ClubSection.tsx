@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Check, Sparkles, MessageCircle, Store, Smartphone, Calendar, CreditCard, Scissors, Flame } from 'lucide-react';
 import { ClubPlan, BarbershopInfo } from '../types';
 
@@ -8,224 +8,218 @@ interface ClubSectionProps {
   onOpenBooking: () => void;
 }
 
-export const ClubSection: React.FC<ClubSectionProps> = ({ plans, info, onOpenBooking }) => {
+export const ClubSection: React.FC<ClubSectionProps> = ({ plans, info }) => {
+  const [activePlanMobile, setActivePlanMobile] = useState<number>(0);
+
   const handleWhatsAppSubscribe = (planName: string, planPrice: number) => {
     const text = `Olá! Gostaria de assinar o *${planName}* (R$ ${planPrice}/mês) da Barbearia do Lucas. Como faço?`;
     window.open(`https://wa.me/${info.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
-    <section id="clube" className="py-20 bg-gradient-to-b from-[#0a0d11] via-[#091516] to-[#0a0d11] border-b border-[#1b2628] relative overflow-hidden">
+    <section id="clube" className="py-10 sm:py-16 md:py-20 bg-gradient-to-b from-[#0a0d11] via-[#091516] to-[#0a0d11] border-b border-[#1b2628] relative overflow-hidden">
       
       {/* Background Teal Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00a896]/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#00a896]/10 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header with User's Exact Copy */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3">
           
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00a896]/20 border border-[#00a896]/40 text-[#00c9b7] text-xs font-black uppercase tracking-wider shadow-md">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00a896]/20 border border-[#00a896]/40 text-[#00c9b7] text-[11px] font-black uppercase tracking-wider shadow-md">
             <Sparkles className="w-3.5 h-3.5 text-[#00c9b7]" />
-            <span>Clube de Assinatura · Barbearia do Lucas</span>
+            <span>Clube de Assinatura</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-heading leading-tight">
-            Seu corte em dia, sem precisar pensar toda vez que vai marcar.
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-heading leading-tight">
+            Seu corte em dia pelo valor fixo mensal
           </h2>
 
-          <p className="text-base sm:text-lg text-[#cbd5e1] leading-relaxed">
-            No <strong className="text-white">Clube do Lucas</strong>, você paga um valor fixo por mês e pode vir 4 vezes no mês, mantendo seu visual sempre alinhado. É mais praticidade, mais frequência e a experiência da Barbearia do Lucas fazendo parte da sua rotina.
+          <p className="text-xs sm:text-base text-[#cbd5e1] leading-relaxed max-w-2xl mx-auto">
+            No <strong className="text-white">Clube do Lucas</strong> você corta o cabelo até 4x no mês por um valor fixo. Mais praticidade e visual sempre alinhado na rotina.
           </p>
 
-          {/* Punchy Manifesto Callout */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#0f1a1c] border border-[#20373d] max-w-2xl mx-auto text-center space-y-1.5 shadow-lg">
-            <p className="text-base sm:text-lg font-bold text-white font-heading">
-              "Você não espera o cabelo crescer para marcar. Você simplesmente mantém."
-            </p>
-            <p className="text-xs text-[#00c9b7] font-semibold uppercase tracking-wider">
-              Clube do Lucas · Mais que um corte, uma rotina de cuidado.
-            </p>
-          </div>
-
-          {/* 4 Pillars Grid from User */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-left">
-            <div className="p-3.5 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#00a896]/15 text-[#00c9b7] flex items-center justify-center shrink-0">
-                <Calendar className="w-4 h-4" />
-              </div>
-              <span className="text-xs font-bold text-white">4 cortes por mês</span>
+          {/* 4 Pillars Grid - Compact on Mobile */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-left max-w-3xl mx-auto">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2">
+              <Calendar className="w-3.5 h-3.5 text-[#00c9b7] shrink-0" />
+              <span className="text-[11px] sm:text-xs font-bold text-white">4x por mês</span>
             </div>
-
-            <div className="p-3.5 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#00a896]/15 text-[#00c9b7] flex items-center justify-center shrink-0">
-                <CreditCard className="w-4 h-4" />
-              </div>
-              <span className="text-xs font-bold text-white">Valor fixo mensal</span>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2">
+              <CreditCard className="w-3.5 h-3.5 text-[#00c9b7] shrink-0" />
+              <span className="text-[11px] sm:text-xs font-bold text-white">Valor fixo</span>
             </div>
-
-            <div className="p-3.5 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#00a896]/15 text-[#00c9b7] flex items-center justify-center shrink-0">
-                <Scissors className="w-4 h-4" />
-              </div>
-              <span className="text-xs font-bold text-white">Mais praticidade</span>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2">
+              <Scissors className="w-3.5 h-3.5 text-[#00c9b7] shrink-0" />
+              <span className="text-[11px] sm:text-xs font-bold text-white">Sem filas</span>
             </div>
-
-            <div className="p-3.5 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#00a896]/15 text-[#00c9b7] flex items-center justify-center shrink-0">
-                <Flame className="w-4 h-4" />
-              </div>
-              <span className="text-xs font-bold text-white">Visual sempre em dia</span>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#121c1f] border border-[#1e2f33] flex items-center gap-2">
+              <Flame className="w-3.5 h-3.5 text-[#00c9b7] shrink-0" />
+              <span className="text-[11px] sm:text-xs font-bold text-white">Sempre alinhado</span>
             </div>
           </div>
         </div>
 
-        {/* 3 Subscription Plans Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {plans.map((plan) => (
-            <div
-              key={plan.id}
-              className={`relative rounded-2xl p-7 flex flex-col justify-between transition-all duration-300 ${
-                plan.popular
-                  ? 'bg-gradient-to-b from-[#122223] to-[#0d1719] border-2 border-[#00c9b7] shadow-xl shadow-[#00a896]/15 scale-[1.02]'
-                  : 'bg-[#0f1418] border border-[#202c30] hover:border-[#00a896]/50'
+        {/* Mobile Plan Selector Tabs (Visible only on mobile) */}
+        <div className="flex md:hidden items-center justify-center p-1 bg-[#0e1619] border border-[#1e2d31] rounded-xl mb-4 gap-1">
+          {plans.map((p, idx) => (
+            <button
+              key={p.id}
+              onClick={() => setActivePlanMobile(idx)}
+              className={`flex-1 py-2 px-1 text-center rounded-lg text-xs font-bold transition-all ${
+                activePlanMobile === idx
+                  ? 'bg-[#00c9b7] text-black shadow-md font-black'
+                  : 'text-[#9ca3af] hover:text-white'
               }`}
             >
-              {/* Highlight badge */}
-              {plan.badge && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#00a896] text-black text-xs font-extrabold uppercase tracking-wider shadow-md">
-                  {plan.badge}
-                </div>
-              )}
+              {p.name.replace('Clube ', '')}
+            </button>
+          ))}
+        </div>
 
-              <div>
-                {/* Plan Header */}
-                <div className="text-center pb-6 border-b border-[#1d292c]">
-                  <h3 className="text-xl font-bold text-white font-heading mb-3">
-                    {plan.name}
-                  </h3>
-                  <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-sm font-semibold text-[#9ca3af]">R$</span>
-                    <span className="text-4xl sm:text-5xl font-extrabold text-[#00c9b7] font-heading tabular-nums">
-                      {plan.price}
+        {/* Subscription Plans Cards */}
+        <div className="mb-8 sm:mb-12">
+          {/* Mobile: Show active plan */}
+          <div className="block md:hidden">
+            {plans[activePlanMobile] && (
+              <div
+                className={`relative rounded-2xl p-5 bg-[#0f1418] border transition-all ${
+                  plans[activePlanMobile].popular
+                    ? 'border-[#00c9b7] bg-gradient-to-b from-[#122223] to-[#0d1719] shadow-lg shadow-[#00a896]/15'
+                    : 'border-[#202c30]'
+                }`}
+              >
+                {plans[activePlanMobile].badge && (
+                  <div className="inline-block px-3 py-0.5 rounded-full bg-[#00a896] text-black text-[10px] font-black uppercase tracking-wider mb-3">
+                    {plans[activePlanMobile].badge}
+                  </div>
+                )}
+                
+                <div className="flex items-baseline justify-between pb-3 border-b border-[#1d292c]">
+                  <div>
+                    <h3 className="text-lg font-bold text-white font-heading">
+                      {plans[activePlanMobile].name}
+                    </h3>
+                    <span className="text-[11px] text-[#00c9b7] font-semibold">Até 4 atendimentos no mês</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs text-[#9ca3af]">R$ </span>
+                    <span className="text-3xl font-extrabold text-[#00c9b7] font-heading tabular-nums">
+                      {plans[activePlanMobile].price}
                     </span>
-                    <span className="text-xs text-[#9ca3af]">/mês</span>
-                  </div>
-                  <div className="mt-2 text-xs text-white font-semibold uppercase tracking-wider bg-[#00a896]/20 py-1 px-3 rounded-md inline-block">
-                    4 visitas no mês = Valor Fixo
+                    <span className="text-[10px] text-[#9ca3af]">/mês</span>
                   </div>
                 </div>
 
-                {/* Features list */}
-                <ul className="py-6 space-y-3.5 text-xs sm:text-sm text-[#cbd5e1]">
-                  {plan.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-left">
-                      <div className="w-4 h-4 rounded-full bg-[#00a896]/20 text-[#00c9b7] flex items-center justify-center shrink-0 mt-0.5">
-                        <Check className="w-3 h-3" />
-                      </div>
+                <ul className="py-4 space-y-2 text-xs text-[#cbd5e1]">
+                  {plans[activePlanMobile].features.map((feat, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-left">
+                      <Check className="w-3.5 h-3.5 text-[#00c9b7] shrink-0 mt-0.5" />
                       <span>{feat}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
 
-              {/* Action Buttons */}
-              <div className="pt-4 border-t border-[#1d292c] space-y-2">
                 <button
-                  onClick={() => handleWhatsAppSubscribe(plan.name, plan.price)}
-                  className={`w-full py-3 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${
-                    plan.popular
-                      ? 'bg-[#00c9b7] hover:bg-[#1fe2cf] text-black shadow-lg shadow-[#00a896]/20'
-                      : 'bg-[#182326] hover:bg-[#00a896] hover:text-black text-white border border-[#2b3d42]'
-                  }`}
+                  onClick={() => handleWhatsAppSubscribe(plans[activePlanMobile].name, plans[activePlanMobile].price)}
+                  className="w-full py-3 rounded-xl text-xs font-bold bg-[#00c9b7] text-black shadow-md shadow-[#00a896]/20 flex items-center justify-center gap-2 active:scale-95 transition-all"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  Assinar pelo WhatsApp
+                  <span>Assinar este Plano no WhatsApp</span>
                 </button>
               </div>
-            </div>
-          ))}
+            )}
+          </div>
+
+          {/* Desktop: Show all 3 plans in grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6">
+            {plans.map((plan) => (
+              <div
+                key={plan.id}
+                className={`relative rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 ${
+                  plan.popular
+                    ? 'bg-gradient-to-b from-[#122223] to-[#0d1719] border-2 border-[#00c9b7] shadow-xl shadow-[#00a896]/15 scale-[1.02]'
+                    : 'bg-[#0f1418] border border-[#202c30] hover:border-[#00a896]/50'
+                }`}
+              >
+                {plan.badge && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#00a896] text-black text-[10px] font-black uppercase tracking-wider shadow-md">
+                    {plan.badge}
+                  </div>
+                )}
+
+                <div>
+                  <div className="text-center pb-5 border-b border-[#1d292c]">
+                    <h3 className="text-lg font-bold text-white font-heading mb-2">
+                      {plan.name}
+                    </h3>
+                    <div className="flex items-baseline justify-center gap-1">
+                      <span className="text-xs font-semibold text-[#9ca3af]">R$</span>
+                      <span className="text-4xl font-extrabold text-[#00c9b7] font-heading tabular-nums">
+                        {plan.price}
+                      </span>
+                      <span className="text-xs text-[#9ca3af]">/mês</span>
+                    </div>
+                    <div className="mt-1 text-[11px] text-[#00c9b7] font-semibold">
+                      4 visitas no mês = Valor Fixo
+                    </div>
+                  </div>
+
+                  <ul className="py-5 space-y-2.5 text-xs text-[#cbd5e1]">
+                    {plan.features.map((feat, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-left">
+                        <Check className="w-3.5 h-3.5 text-[#00c9b7] shrink-0 mt-0.5" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-3 border-t border-[#1d292c]">
+                  <button
+                    onClick={() => handleWhatsAppSubscribe(plan.name, plan.price)}
+                    className={`w-full py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                      plan.popular
+                        ? 'bg-[#00c9b7] hover:bg-[#1fe2cf] text-black shadow-md shadow-[#00a896]/20'
+                        : 'bg-[#182326] hover:bg-[#00a896] hover:text-black text-white border border-[#2b3d42]'
+                    }`}
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>Assinar pelo WhatsApp</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Como assino o Clube do Lucas? */}
-        <div className="rounded-2xl bg-[#0f1719] border border-[#1e2f33] p-8 lg:p-10">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <h3 className="text-2xl font-bold text-white font-heading">
-              Como assino o Clube do Lucas?
-            </h3>
-            <p className="text-sm text-[#9ca3af] mt-2">
-              Escolha a forma mais prática para você e comece a manter sua rotina de cuidado:
-            </p>
-          </div>
+        {/* Como assinar? - Compact Mobile Box */}
+        <div className="rounded-xl sm:rounded-2xl bg-[#0f1719] border border-[#1e2f33] p-4 sm:p-6 text-center">
+          <h3 className="text-base sm:text-lg font-bold text-white font-heading mb-1">
+            Como funciona a adesão ao clube?
+          </h3>
+          <p className="text-xs text-[#9ca3af] max-w-xl mx-auto mb-4">
+            Você pode assinar diretamente com nosso time pelo WhatsApp ou na recepção ao finalizar seu corte.
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            
-            {/* 1. WhatsApp */}
-            <div className="p-6 rounded-xl bg-[#131e21] border border-[#22353a] space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-[#00a896]/15 text-[#00c9b7] flex items-center justify-center mx-auto">
-                <MessageCircle className="w-6 h-6" />
-              </div>
-              <h4 className="text-base font-bold text-white font-heading">1. Assine pelo WhatsApp</h4>
-              <p className="text-xs text-[#9ca3af] leading-relaxed">
-                Envie uma mensagem para nossa equipe e ative seu plano em menos de 2 minutos.
-              </p>
-              <a
-                href={`https://wa.me/${info.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Olá! Gostaria de saber mais e assinar o Clube do Lucas.')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-xs font-bold text-[#00c9b7] hover:underline pt-1"
-              >
-                Chamar no WhatsApp →
-              </a>
-            </div>
-
-            {/* 2. Recepção */}
-            <div className="p-6 rounded-xl bg-[#131e21] border border-[#22353a] space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-[#00a896]/15 text-[#00c9b7] flex items-center justify-center mx-auto">
-                <Store className="w-6 h-6" />
-              </div>
-              <h4 className="text-base font-bold text-white font-heading">2. Assine na Recepção</h4>
-              <p className="text-xs text-[#9ca3af] leading-relaxed">
-                Ao terminar o seu corte ou barba na Barbearia do Lucas, solicite a adesão na recepção.
-              </p>
-              <span className="text-xs text-[#9ca3af] block pt-1">
-                {info.address} · Vila Prudente
-              </span>
-            </div>
-
-            {/* 3. AppBarber */}
-            <div className="p-6 rounded-xl bg-[#131e21] border border-[#22353a] space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-[#00a896]/15 text-[#00c9b7] flex items-center justify-center mx-auto">
-                <Smartphone className="w-6 h-6" />
-              </div>
-              <h4 className="text-base font-bold text-white font-heading">3. Assine pelo AppBarber</h4>
-              <p className="text-xs text-[#9ca3af] leading-relaxed">
-                Utilize o app oficial AppBarber para agendar e gerenciar seus horários mensais.
-              </p>
-              <a
-                href={info.appBarberUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-xs font-bold text-[#00c9b7] hover:underline pt-1"
-              >
-                Agende agora →
-              </a>
-            </div>
-
-          </div>
-
-          {/* Slogan Banner */}
-          <div className="mt-8 pt-6 border-t border-[#1d2c30] flex items-center justify-center gap-3 text-center">
-            <div className="w-7 h-7 rounded-full bg-[#00a896] text-black font-extrabold flex items-center justify-center text-xs">
-              L
-            </div>
-            <span className="text-sm font-semibold tracking-wider uppercase text-white/90">
-              Mais que corte, uma rotina de cuidado · Barbearia do Lucas
-            </span>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href={`https://wa.me/${info.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Olá! Quero assinar o Clube do Lucas.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#00c9b7] text-black text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-[#00c9b7]/20"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>Assinar no WhatsApp</span>
+            </a>
+            <span className="text-xs text-[#64748b] hidden sm:inline">ou</span>
+            <span className="text-xs text-[#cbd5e1]">Solicite na recepção na Rua Orfanato, 508</span>
           </div>
         </div>
 
       </div>
+
     </section>
   );
 };

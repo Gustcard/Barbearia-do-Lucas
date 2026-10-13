@@ -19,7 +19,7 @@ export const initialBarbershopInfo: BarbershopInfo = {
   openingHours: {
     weekdays: "Segunda a Sexta: 09:00 às 20:00",
     saturday: "Sábados: 08:30 às 19:30",
-    sunday: "Domingos & Feriados: Fechado"
+    sunday: "Domingos: 09:00 às 14:00"
   },
   amenities: [
     {

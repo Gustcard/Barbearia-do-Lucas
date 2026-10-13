@@ -53,7 +53,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
   }, [selectedBarberInitial]);
 
-  // Generate available next 7 dates
+  // Generate available next 7 dates (including Sundays)
   const nextDays = Array.from({ length: 7 }).map((_, index) => {
     const d = new Date();
     d.setDate(d.getDate() + index);
@@ -66,7 +66,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       month: monthNames[d.getMonth()],
       isSunday: d.getDay() === 0
     };
-  }).filter(d => !d.isSunday); // Filter out closed days
+  });
 
   useEffect(() => {
     if (!selectedDate && nextDays.length > 0) {
@@ -74,9 +74,23 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
   }, []);
 
-  const timeSlots = [
+  const isSelectedDateSunday = selectedDate ? new Date(selectedDate + 'T12:00:00').getDay() === 0 : false;
+
+  const standardTimeSlots = [
     '09:00', '09:45', '10:30', '11:15', '13:00', '13:45', '14:30', '15:15', '16:00', '16:45', '17:30', '18:15', '19:00'
   ];
+
+  const sundayTimeSlots = [
+    '09:00', '09:45', '10:30', '11:15', '12:00', '12:45', '13:15', '13:30'
+  ];
+
+  const timeSlots = isSelectedDateSunday ? sundayTimeSlots : standardTimeSlots;
+
+  useEffect(() => {
+    if (isSelectedDateSunday && selectedTime && !sundayTimeSlots.includes(selectedTime)) {
+      setSelectedTime('');
+    }
+  }, [selectedDate, isSelectedDateSunday]);
 
   if (!isOpen) return null;
 
