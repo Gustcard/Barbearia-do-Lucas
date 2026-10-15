@@ -16,6 +16,8 @@ import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
 import { MyAppointmentsModal } from './components/MyAppointmentsModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { StickyMobileBar } from './components/StickyMobileBar';
+import { AppDownloadBanner } from './components/AppDownloadBanner';
 
 import {
   initialBarbershopInfo,
@@ -148,7 +150,7 @@ export default function App() {
         appointmentsCount={appointments.length}
       />
 
-      <main>
+      <main className="pb-16 md:pb-0">
         {/* Hero Section */}
         <Hero
           info={shopInfo}
@@ -191,7 +193,12 @@ export default function App() {
           reviews={reviews}
         />
 
-        {/* Location, Hours & FAQ */}
+        {/* Feature 5: Aplicativo Oficial AppBarber Banner */}
+        <AppDownloadBanner
+          appBarberUrl={shopInfo.appBarberUrl}
+        />
+
+        {/* Location, Hours, Experiência & FAQ */}
         <LocationAndHours
           info={shopInfo}
           onOpenBooking={() => handleOpenBooking()}
@@ -206,7 +213,14 @@ export default function App() {
         onOpenBooking={() => handleOpenBooking()}
       />
 
-      {/* Floating WhatsApp for Fast Lead Generation */}
+      {/* Feature 1: Sticky Mobile Action Bar for instant mobile booking */}
+      <StickyMobileBar
+        appBarberUrl={shopInfo.appBarberUrl}
+        whatsappNumber={shopInfo.whatsapp}
+        shopName={shopInfo.name}
+      />
+
+      {/* Floating WhatsApp for Desktop */}
       <FloatingWhatsApp
         whatsappNumber={shopInfo.whatsapp}
         shopName={shopInfo.name}
