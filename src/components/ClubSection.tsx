@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Check, Sparkles, MessageCircle, Store, Smartphone, Calendar, CreditCard, Scissors, Flame } from 'lucide-react';
 import { ClubPlan, BarbershopInfo } from '../types';
+import { trackClubSubscribe } from '../utils/analytics';
 
 interface ClubSectionProps {
   plans: ClubPlan[];
@@ -12,6 +13,7 @@ export const ClubSection: React.FC<ClubSectionProps> = ({ plans, info }) => {
   const [activePlanMobile, setActivePlanMobile] = useState<number>(0);
 
   const handleWhatsAppSubscribe = (planName: string, planPrice: number) => {
+    trackClubSubscribe(planName, planPrice);
     const text = `Olá! Gostaria de assinar o *${planName}* (R$ ${planPrice}/mês) da Barbearia do Lucas. Como faço?`;
     window.open(`https://wa.me/${info.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`, '_blank');
   };

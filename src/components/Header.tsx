@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, Menu, X, MessageCircle, Clock, MapPin } from 'lucide-react';
 import { BarbershopInfo } from '../types';
 import { OfficialLogo } from './OfficialLogo';
+import { trackBookingClick } from '../utils/analytics';
 
 interface HeaderProps {
   info: BarbershopInfo;
@@ -44,6 +45,7 @@ export const Header: React.FC<HeaderProps> = ({ info }) => {
             href={info.appBarberUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackBookingClick('header_botao')}
             className="px-3 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold text-black bg-[#00c9b7] hover:bg-[#1fe2cf] active:scale-[0.98] rounded-lg sm:rounded-xl transition-all shadow-md shadow-[#00a896]/20 flex items-center gap-1.5 shrink-0"
           >
             <Calendar className="w-3.5 h-3.5" />

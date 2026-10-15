@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Sparkles, ChevronRight, Star, Scissors, CheckCircle2 } from 'lucide-react';
 import { BarbershopInfo } from '../types';
+import { trackBookingClick } from '../utils/analytics';
 
 interface HeroProps {
   info: BarbershopInfo;
@@ -70,6 +71,7 @@ export const Hero: React.FC<HeroProps> = ({ info, onOpenBooking }) => {
                 href={info.appBarberUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackBookingClick('hero_agendamento')}
                 className="w-full sm:w-auto justify-center px-7 py-3.5 text-xs sm:text-sm font-extrabold text-black bg-[#00c9b7] hover:bg-[#1fe2cf] rounded-xl transition-all shadow-lg shadow-[#00a896]/25 flex items-center gap-2 active:scale-[0.98]"
               >
                 <Calendar className="w-4 h-4 shrink-0" />

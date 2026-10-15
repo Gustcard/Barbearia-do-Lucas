@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ServiceItem } from '../types';
 import { Clock, ArrowRight, ChevronRight, Calendar } from 'lucide-react';
+import { trackBookingClick } from '../utils/analytics';
 
 interface ServicesSectionProps {
   services: ServiceItem[];
@@ -66,6 +67,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, appB
               href={appBarberUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackBookingClick('servico_mobile_' + service.name)}
               className="p-3 flex items-center justify-between gap-2.5 hover:bg-[#11171b] active:bg-[#142024] transition-colors group"
             >
               {/* Left: Service name, duration & subtle note */}
@@ -154,6 +156,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services, appB
                   href={appBarberUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackBookingClick('servico_desktop_' + service.name)}
                   className="w-full py-2 rounded-lg bg-[#142023] hover:bg-[#00c9b7] hover:text-black border border-[#21353b] text-[#00c9b7] text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95"
                 >
                   <span>Agendar este serviço</span>

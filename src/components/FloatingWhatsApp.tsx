@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
+import { trackWhatsAppClick } from '../utils/analytics';
 
 interface FloatingWhatsAppProps {
   whatsappNumber: string;
@@ -17,6 +18,7 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({ whatsappNumb
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackWhatsAppClick('botao_flutuante')}
         aria-label="Falar no WhatsApp"
         className="flex items-center gap-2 px-3 py-2.5 sm:px-4 sm:py-3 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-full shadow-lg shadow-[#25D366]/30 hover:scale-105 active:scale-95 transition-all duration-200 group"
       >
